@@ -48,15 +48,13 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 TextButton(
                   child: const Text('CANCEL'),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 ),
                 ElevatedButton(
                   child: const Text('NEXT'),
                   onPressed: () {
-                  Navigator.pop(context);
+                    Navigator.pop(context);
                   },
-                  
                 ),
               ],
             ),
