@@ -8,6 +8,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
   // TODO: Add text editing controllers (101)
   @override
   Widget build(BuildContext context) {
@@ -30,14 +32,12 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 100.0),
             TextField(
               decoration: const InputDecoration(
-                filled: true,
                 labelText: 'Username',
               ),
             ),
             const SizedBox(height: 12.0),
             TextField(
               decoration: const InputDecoration(
-                filled: true,
                 labelText: 'Password',
               ),
               obscureText: true,
@@ -48,13 +48,31 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 TextButton(
                   child: const Text('CANCEL'),
-                  onPressed: () {},
+                  onPressed: () {
+                    // TODO: Clear the text fields (101)
+                    _usernameController.clear();
+                    _passwordController.clear();
+                  },
+                  style: TextButton.styleFrom(
+                    elevation: 8.0,
+                    foregroundColor: Colors.black,
+                    shape: const BeveledRectangleBorder(
+                      borderRadius:
+                          BorderRadiusGeometry.all(Radius.circular(7.0)),
+                    ),
+                  ),
                 ),
                 ElevatedButton(
                   child: const Text('NEXT'),
                   onPressed: () {
                     Navigator.pop(context);
                   },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 8.0,
+                    shape: const BeveledRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                    ),
+                  ),
                 ),
               ],
             ),

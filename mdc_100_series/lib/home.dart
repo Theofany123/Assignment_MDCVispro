@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'colors.dart';
 import 'model/product.dart';
 import 'model/products_repository.dart';
+import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  List<Card> _buildGridCards(BuildContext context) {
+  List<Card> _buildShrineTheme(BuildContext context) {
     List<Product> products = ProductsRepository.loadProducts(Category.all);
 
     if (products.isEmpty) {
@@ -19,15 +21,17 @@ class HomePage extends StatelessWidget {
 
     return products.map((product) {
       return Card(
+        elevation: 0.0,
         clipBehavior: Clip.antiAlias,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // TODO: Align labels to the bottom and center (103)
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             AspectRatio(
               aspectRatio: 18 / 11,
               child: Image.asset(
                 product.assetName,
-                // package: product.assetPackage,
               ),
             ),
             Expanded(
@@ -35,16 +39,20 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  // TODO: Change innermost Column (103)
                   children: <Widget>[
+                    // TODO: Handle overflowing labels (103)
                     Text(
                       product.name,
-                      style: theme.textTheme.titleLarge,
+                      style: theme.textTheme.labelLarge,
+                      softWrap: false,
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizedBox(height: 4.0),
                     Text(
                       formatter.format(product.price),
-                      style: theme.textTheme.titleSmall,
+                      style: theme.textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -69,7 +77,12 @@ class HomePage extends StatelessWidget {
             print('Menu button');
           },
         ),
-        title: const Text('GoATK'),
+        title: Text(
+          'GoATK',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                color: kShrineBrown900,
+              ),
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -91,11 +104,9 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(16.0),
-        childAspectRatio: 8.0 / 9.0,
-        children: _buildGridCards(context),
+      resizeToAvoidBottomInset: false,
+      body: AsymmetricView(
+        products: ProductsRepository.loadProducts(Category.all),
       ),
     );
   }
