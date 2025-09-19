@@ -1,4 +1,3 @@
-// TODO Implement this library.
 import 'package:flutter/material.dart';
 
 const kShrinePink50 = Color.fromARGB(255, 62, 18, 9);
